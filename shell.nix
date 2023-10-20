@@ -1,3 +1,4 @@
+# from https://github.com/edolstra/flake-compat
 (import
   (
     let lock = builtins.fromJSON (builtins.readFile ./flake.lock); in

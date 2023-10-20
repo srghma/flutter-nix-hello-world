@@ -1,19 +1,20 @@
+# https://nixos.wiki/wiki/Flutter
 { androidenv }:
 
 androidenv.composeAndroidPackages {
-  toolsVersion = "26.1.1";
-  platformToolsVersion = "33.0.3";
-  buildToolsVersions = [ "30.0.3" ];
-  includeEmulator = false;
-  emulatorVersion = "30.3.4";
+  # toolsVersion = "26.1.1";
+  # platformToolsVersion = "33.0.3";
+  buildToolsVersions = [ "34.0.0" ]; # https://developer.android.com/tools/releases/build-tools
+  # includeEmulator = false;
+  # emulatorVersion = "30.3.4";
   platformVersions = [ "28" "29" "30" "31" ];
-  includeSources = false;
-  includeSystemImages = false;
-  systemImageTypes = [ "google_apis_playstore" ];
+  # includeSources = false;
+  # includeSystemImages = false;
+  # systemImageTypes = [ "google_apis_playstore" ];
   abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
-  cmakeVersions = [ "3.10.2" ];
-  includeNDK = true;
-  ndkVersions = [ "22.0.7026061" ];
-  useGoogleAPIs = false;
-  useGoogleTVAddOns = false;
+  # cmakeVersions = [ "3.10.2" ];
+  # includeNDK = true;
+  # ndkVersions = [ "22.0.7026061" ];
+  # useGoogleAPIs = false;
+  # useGoogleTVAddOns = false;
 }
