@@ -36,10 +36,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1697980738,
-        "narHash": "sha256-wUhBhc1P06FJ4uhRKj2FSY+81XjNo/MRg9Edx7JLsbY=",
-        "ref": "refs/heads/master",
-        "rev": "e64b0cfa3a6c86614aa75d8f44d6f98a73af831e",
+        "lastModified": 1697980906,
+        "narHash": "sha256-+QzCeV1lnZNG8sV971C42KwwvzKkYvzVhPHrUFSao6Y=",
+        "ref": "refs/heads/update-flutter",
+        "rev": "f3df328917c1f636c556b9549063ae1a09f6f5d4",
         "revCount": 538116,
         "type": "git",
         "url": "file:/home/srghma/projects/nixpkgs"
