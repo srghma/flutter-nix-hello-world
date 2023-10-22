@@ -36,8 +36,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1697866195,
+        "lastModified": 1697980738,
         "narHash": "sha256-wUhBhc1P06FJ4uhRKj2FSY+81XjNo/MRg9Edx7JLsbY=",
+        "ref": "refs/heads/master",
+        "rev": "e64b0cfa3a6c86614aa75d8f44d6f98a73af831e",
+        "revCount": 538116,
         "type": "git",
         "url": "file:/home/srghma/projects/nixpkgs"
       },
