@@ -89,25 +89,70 @@
         };
       in {
         devShells.default =
-          let android = pkgs.callPackage ./nix/android.nix { };
+
+          let
+            buildToolsVersions = "34.0.0";
+            androidComposition = pkgs.androidenv.composeAndroidPackages {
+              cmdLineToolsVersion = "11.0";
+              toolsVersion = "26.1.1";
+              platformToolsVersion = "34.0.4";
+              buildToolsVersions = [ buildToolsVersions ];
+              includeEmulator = true;
+              emulatorVersion = "33.1.6";
+              platformVersions = [ "34" ];
+              includeSources = true;
+              includeSystemImages = true;
+              systemImageTypes = [ "google_apis_playstore" ];
+              abiVersions = [ "x86_64" ];
+              cmakeVersions = [ ];
+              includeNDK = true;
+              useGoogleAPIs = true;
+              useGoogleTVAddOns = true;
+              includeExtras = [ "extras;google;gcm" ];
+              extraLicenses = [
+                "android-sdk-preview-license"
+                "android-googletv-license"
+                "android-sdk-arm-dbt-license"
+                "google-gdk-license"
+                "intel-android-extra-license"
+                "intel-android-sysimage-license"
+                "mips-android-sysimage-license"
+              ];
+            };
+
           jdk_myversion = pkgs.jdk21;
           in pkgs.mkShell {
             buildInputs = with pkgs; [
+              android-studio
+
               # from pkgs
               flutter
               jdk_myversion
               #from ./nix/*
-              android.platform-tools
+              androidComposition.platform-tools
+              androidComposition.androidsdk
             ];
 
-            ANDROID_HOME = "${android.androidsdk}/libexec/android-sdk";
+            ANDROID_HOME = "${androidComposition.androidsdk}/libexec/android-sdk";
 
             # https://endoflife.date/oracle-jdk
             JAVA_HOME = jdk_myversion;
-
+            ANDROID_JAVA_HOME = jdk_myversion.home;
             ANDROID_AVD_HOME = (toString ./.) + "/.android/avd";
+            ANDROID_SDK_ROOT = "${androidComposition.androidsdk}/libexec/android-sdk";
 
             CHROME_EXECUTABLE = "google-chrome-beta"; # flutter doctor
+            LD_LIBRARY_PATH="${pkgs.libglvnd}/lib"; # https://github.com/NixOS/nixpkgs/issues/219745#issuecomment-1770119585
+
+            shellHook = ''
+              export PATH="$PATH:$ANDROID_SDK_ROOT/build-tools/${buildToolsVersions}"
+              echo "To create an AVD, type":
+              echo "avdmanager create avd -n cmdline-created-android -k \"system-images;android-34;google_apis_playstore;x86_64\""
+              echo "---------------"
+              echo "To launch it, type \"emulator -avd cmdline-created-android\""
+            '';
+
+            # GRADLE_OPTS = "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidComposition.androidsdk}/libexec/android-sdk/build-tools/${buildToolsVersions}/aapt2";
           };
       });
 }
